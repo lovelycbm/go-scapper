@@ -58,9 +58,11 @@ func writeJobs(jobs []extractedJob) {
 		go writeJobItem(job, jobC)
 	}
 
-	jobSlice := <-jobC
-	jwErr := w.Write(jobSlice)
-	checkErr(jwErr)
+	for i := 0; i < len(jobs); i++ {
+		jobSlice := <-jobC
+		jwErr := w.Write(jobSlice)
+		checkErr(jwErr)
+	}
 
 }
 
